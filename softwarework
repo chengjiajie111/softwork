@@ -1,0 +1,101 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<iostream>
+using namespace std;
+
+typedef struct zuqiu
+{
+char name[20];
+int win,ping,lose,point;
+}qiu;
+
+qiu paixu(qiu a[8])
+{
+int i,x,y,n,h;
+qiu c;
+for(i=0;i<8;i++)
+{
+for(h=i+1;h<8;h++)
+{
+if(a[i].point<a[h].point)
+{
+c=a[i];a[i]=a[h];a[h]=c;
+}
+else if(a[i].point==a[h].point)
+{
+x=strlen(a[i].name);y=strlen(a[h].name);
+if(x<=y)
+{
+for(n=0;n<x;n++)
+{
+if(a[i].name[n]>a[h].name[n])
+{
+c=a[i];a[i]=a[h];a[h]=c;break;
+}
+
+}
+
+}
+else
+{
+for(n=0;n<y;n++)
+{
+if(a[i].name[n]>a[h].name[n])
+{
+c=a[i];a[i]=a[h];a[h]=c;n=y+1;break;
+}
+
+}
+if(n==y)
+{c=a[i];a[i]=a[h];a[h]=c;n=y+1;}
+}
+
+}
+
+}
+
+}
+return *a;
+}
+
+int main()
+{
+int i,x=0,y=0;
+char z;
+
+qiu a[8],b[8];
+printf("请输入队伍信息，按队伍组别，名称，胜场数，平局数，负场数输入\n");
+for(i=0;i<16;i++)
+{
+cin>>z;
+
+if(z=='A')
+{
+cin>>a[x].name>>a[x].win>>a[x].ping>>a[x].lose;
+a[x].point=a[x].ping+a[x].win*3;
+x++;
+}
+
+else
+{
+cin>>b[y].name>>b[y].win>>b[y].ping>>b[y].lose;
+
+b[y].point=b[y].ping+b[y].win*3;
+
+y++;
+}
+
+}
+*a=paixu(a);
+*b=paixu(b);
+
+cout<<"第二轮对战关系如图"<<endl;
+for(i=0;i<8;i++)
+{
+cout<<a[i].name<<"vs"<<b[7-i].name<<endl;
+}
+system("pause");
+return 0;
+
+}
